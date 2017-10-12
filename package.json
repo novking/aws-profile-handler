@@ -1,0 +1,16 @@
+{
+  "name": "aws-profile-credentials",
+  "version": "1.0.0",
+  "description": "dealing with aws credential a little bit eaiser",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "aws",
+    "ini",
+    "profile"
+  ],
+  "author": "Aaron Zhang",
+  "license": "MIT"
+}
