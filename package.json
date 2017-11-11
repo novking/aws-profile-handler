@@ -1,5 +1,5 @@
 {
-  "name": "aws-profile-credentials",
+  "name": "aws-profile-handler",
   "version": "1.0.0",
   "description": "dealing with aws credential a little bit eaiser",
   "main": "index.js",
