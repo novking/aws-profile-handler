@@ -15,8 +15,5 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^21.2.1"
-  },
-  "jest": {
-    "automock": false
   }
 }

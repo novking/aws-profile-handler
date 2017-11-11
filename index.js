@@ -9,7 +9,11 @@ class awsProfileHandler {
     constructor(filePath) {
         const defaultFilePath = path.join(os.homedir(), '.aws', 'credentials');
         this.filePath = filePath || defaultFilePath;
-        this.profileObject = Ini.decodeIniData(Utils.readFile(this.filePath));
+        try {
+            this.profileObject = Ini.decodeIniData(Utils.readFile(this.filePath));
+        } catch (err) {
+            throw err;
+        }
     }
 
     listProfiles() {
@@ -24,6 +28,7 @@ class awsProfileHandler {
 
     deleteProfile(profile) {
         let outputProfileObject = Utils.deepCopy(this.profileObject);
+        console.log(outputProfileObject);
         delete outputProfileObject[profile];
         let encodedProfile = Ini.encodeIniFormat(this.filePath, outputProfileObject);
         Utils.writeFile(encodedProfile);
