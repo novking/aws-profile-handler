@@ -1,6 +1,6 @@
 {
   "name": "aws-profile-handler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "dealing with aws credential a little bit eaiser",
   "main": "index.js",
   "scripts": {
