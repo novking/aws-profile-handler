@@ -28,7 +28,6 @@ class awsProfileHandler {
 
     deleteProfile(profile) {
         let outputProfileObject = Utils.deepCopy(this.profileObject);
-        console.log(outputProfileObject);
         delete outputProfileObject[profile];
         let encodedProfile = Ini.encodeIniFormat(this.filePath, outputProfileObject);
         Utils.writeFile(encodedProfile);
