@@ -1,8 +1,8 @@
 'use strict';
 
+jest.mock('fs');
 const Utils = require('../../lib/utils');
 const fs = require('fs');
-jest.mock('fs');
 
 describe('Utils Unit test', () => {
     test('write file', () => {

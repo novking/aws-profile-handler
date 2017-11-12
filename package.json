@@ -4,7 +4,8 @@
   "description": "dealing with aws credential a little bit eaiser",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage && cat ./coverage/lcov.info"
+    "test": "jest --coverage",
+    "coveralls": "cat ./coverage/lcov.info"
   },
   "keywords": [
     "aws",

@@ -1,12 +1,12 @@
 'use strict';
+
+jest.mock('../lib/ini');
+jest.mock('../lib/utils');
 const awsProfileHandler = require('../index');
 const Ini = require('../lib/ini');
 const Utils = require('../lib/utils');
 const path = require('path');
 const os = require('os');
-
-jest.mock('../lib/ini');
-jest.mock('../lib/utils');
 
 let initInstance;
 let testingObject;
