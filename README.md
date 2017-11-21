@@ -18,7 +18,7 @@ Install it as an npm package
 npm install aws-profile-handler
 ```
 
-## How do I use it?
+## Initialization
 
 ```javascript
 const awsProfileHandler = require('aws-profile-handler');
@@ -42,10 +42,10 @@ awsProfiler.addProfile('awesomeProfileName', valid_credential_object);
 // .aws/credentials
 [awesomeProfileName]
 aws_access_key_id=123
-aws_access_key_id=456
+aws_secret_access_key=456
 ```
 
-## Get profile
+## Get a profile's credentials
 
 ```javascript
 awsProfiler.getProfileCredentials('awesomeProfileName');
@@ -54,7 +54,7 @@ awsProfiler.getProfileCredentials('awesomeProfileName');
 // return an object with 'aws_access_key_id' and 'aws_access_key_id'
 {
     "aws_access_key_id": "123",
-    "aws_access_key_id": "456"
+    "aws_secret_access_key": "456"
 }
 ```
 
