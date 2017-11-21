@@ -1,7 +1,7 @@
 {
   "name": "aws-profile-handler",
   "version": "1.0.1",
-  "description": "dealing with aws credential a little bit eaiser",
+  "description": "dealing with aws credentials a little bit eaiser",
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
@@ -16,5 +16,13 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^21.2.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/novking/aws-profile-handler.git"
+  },
+  "bugs": {
+    "email": "awesome1aaron@gmail.com",
+    "url": "https://github.com/novking/aws-profile-handler/issues"
   }
 }
