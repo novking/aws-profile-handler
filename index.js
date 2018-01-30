@@ -30,14 +30,14 @@ class awsProfileHandler {
         let outputProfileObject = Utils.deepCopy(this.profileObject);
         delete outputProfileObject[profile];
         let encodedProfile = Ini.encodeIniFormat(this.filePath, outputProfileObject);
-        Utils.writeFile(encodedProfile);
+        Utils.writeFile(this.filePath, encodedProfile);
     }
 
     addProfile(profile, credentials) {
         let outputProfileObject = Utils.deepCopy(this.profileObject);
         outputProfileObject[profile] = credentials;
         let encodedProfile = Ini.encodeIniFormat(this.filePath, outputProfileObject);
-        Utils.writeFile(encodedProfile);
+        Utils.writeFile(this.filePath, encodedProfile);
     }
 }
 module.exports = awsProfileHandler;
