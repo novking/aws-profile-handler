@@ -87,7 +87,7 @@ describe('awsProfileHandler unit test', () => {
     test('deleteProfile', () => {
         initInstance.deleteProfile("awesome");
         expect(Ini.encodeIniFormat)
-           .toBeCalledWith('amazing/package', childObject);
+           .toBeCalledWith(childObject);
         expect(Utils.writeFile).toBeCalled();
     });
 
@@ -102,6 +102,6 @@ describe('awsProfileHandler unit test', () => {
         initInstance.addProfile("add", addedObject.add);
         expect(Utils.writeFile).toBeCalled();
         expect(Ini.encodeIniFormat)
-            .toBeCalledWith('amazing/package', expected_result);
+            .toBeCalledWith(expected_result);
     })
 });

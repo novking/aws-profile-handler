@@ -29,14 +29,16 @@ class awsProfileHandler {
     deleteProfile(profile) {
         let outputProfileObject = Utils.deepCopy(this.profileObject);
         delete outputProfileObject[profile];
-        let encodedProfile = Ini.encodeIniFormat(this.filePath, outputProfileObject);
+        let encodedProfile = Ini.encodeIniFormat(outputProfileObject);
+        console.log(this.filePath);
+        console.log(encodedProfile);
         Utils.writeFile(this.filePath, encodedProfile);
     }
 
     addProfile(profile, credentials) {
         let outputProfileObject = Utils.deepCopy(this.profileObject);
         outputProfileObject[profile] = credentials;
-        let encodedProfile = Ini.encodeIniFormat(this.filePath, outputProfileObject);
+        let encodedProfile = Ini.encodeIniFormat(outputProfileObject);
         Utils.writeFile(this.filePath, encodedProfile);
     }
 }
