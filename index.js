@@ -9,11 +9,7 @@ class awsProfileHandler {
     constructor(filePath) {
         const defaultFilePath = path.join(os.homedir(), '.aws', 'credentials');
         this.filePath = filePath || defaultFilePath;
-        try {
-            this.profileObject = Ini.decodeIniData(Utils.readFile(this.filePath));
-        } catch (err) {
-            throw err;
-        }
+        this.profileObject = Ini.decodeIniData(Utils.readFile(this.filePath));
     }
 
     listProfiles() {
