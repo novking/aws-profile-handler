@@ -64,7 +64,7 @@ describe('Ini module unit test', () => {
                 return Ini.decodeIniData(incompeletedKeyPair);
             }
             expect(invalidContent)
-                .toThrowError('Invalid credential file. Incomplete key/value pair');
+                .toThrowError('Invalid AWS credential file. Incomplete key/value pair');
         });
 
         it('nested sessions error', () => {
@@ -72,7 +72,7 @@ describe('Ini module unit test', () => {
                 return Ini.decodeIniData(nestedSession);
             }
             expect(invalidContent)
-                .toThrowError('Invalid credential file. Cannot have nested sessions');
+                .toThrowError('Invalid AWS credential file. Cannot have nested sessions');
         });
     });
 });

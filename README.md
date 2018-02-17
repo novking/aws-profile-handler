@@ -1,6 +1,6 @@
 # aws-profile-handler
-Simply tool for extracting and editing the .aws/credentials
-You can listProfiles, getProfileCredentials, deleteProfile, and addProfile.
+Simply tool for extracting and editing the .aws/credentials.
+You can add, get, list, and delete profile(s) synchronously, no 3p dependencies introduced.
 
 [![Build Status](https://travis-ci.org/novking/aws-profile-handler.svg?branch=master)](https://travis-ci.org/novking/aws-profile-handler)
 [![Coverage Status](https://coveralls.io/repos/github/novking/aws-profile-handler/badge.svg?branch=master)](https://coveralls.io/github/novking/aws-profile-handler?branch=master)
@@ -12,22 +12,10 @@ You can listProfiles, getProfileCredentials, deleteProfile, and addProfile.
 
 ## How do I install it?
 
-Install it as an npm package
+Install it into your package
 
 ```bash
-npm install aws-profile-handler
-```
-
-## Initialization
-
-```javascript
-const awsProfileHandler = require('aws-profile-handler');
-
-// default to ~/.aws/credential. 
-let awsProfiler = new awsProfileHandler();
-
-// can be customized file
-let awsProfiler = new awsProfileHandler('path/to/aws/credentials');
+npm install aws-profile-handler --save
 ```
 
 ## Add a profile
@@ -37,9 +25,15 @@ let valid_credential_object = {
         "aws_access_key_id": "123",
         "aws_secret_access_key": "456"
 };
-awsProfiler.addProfile('awesomeProfileName', valid_credential_object);
 
-// .aws/credentials
+let awsProfiler = require('aws-profile-handler');
+
+// AWS credentials file path is optional as the last parameter. Default to ~/.aws/credentials
+awsProfiler.addProfile('awesomeProfileName', valid_credential_object); 
+awsProfiler.addProfile('awesomeProfileName', valid_credential_object, 'file/path/to/aws/credentials'); 
+
+
+// .aws/credentials 
 [awesomeProfileName]
 aws_access_key_id=123
 aws_secret_access_key=456
@@ -48,9 +42,15 @@ aws_secret_access_key=456
 ## Get a profile's credentials
 
 ```javascript
-awsProfiler.getProfileCredentials('awesomeProfileName');
 
-// return null if profile doesn't exist
+let awsProfiler = require('aws-profile-handler');
+
+// AWS credentials file path is optional as the last parameter. Default to ~/.aws/credentials
+awsProfiler.getProfileCredentials('awesomeProfileName');
+awsProfiler.getProfileCredentials('awesomeProfileName', 'file/path/to/aws/credentials');
+
+
+// return 'null' if profile doesn't exist
 // return an object with 'aws_access_key_id' and 'aws_access_key_id'
 {
     "aws_access_key_id": "123",
@@ -61,14 +61,42 @@ awsProfiler.getProfileCredentials('awesomeProfileName');
 ## List profiles
 
 ```javascript
+let awsProfiler = require('aws-profile-handler');
+
+// AWS credentials file path is optional as the last parameter. Default to ~/.aws/credentials
 awsProfiler.listProfiles();
+awsProfiler.listProfiles('file/path/to/aws/credentials');
 
 // return a list of all the profiles' name
-['awesomeProfileName', 'something', 'else', 'if', 'exists'];
+// ['awesomeProfileName', 'something', 'else', 'if', 'exists'];
 ```
 
 ## Delete a profile
 
 ```javascript
-awsProfiler.deleteProfile('awesomeProfileName');
+let awsProfiler = require('aws-profile-handler');
+
+// AWS credentials file path is optional as the last parameter. Default to ~/.aws/credentials
+awsProfiler.deleteProfile('lameProfileName');
+awsProfiler.deleteProfile('lameProfileName', 'file/path/to/aws/credentials');
 ```
+## Error
+Two customized errors would be thrown.
+1. If format is invalid.
+```javascript
+// error.message:
+'Invalid AWS credential file. Cannot have nested sessions'
+```
+2. If one or more values are missing.
+```javascript
+// .aws/credentials
+[badProfile]
+aws_access_key_id=
+aws_secret_access_key=idIsMissing
+
+// error.message
+'Invalid AWS credential file. Incomplete key/value pair'
+
+```
+### Note:
+Version 1.X.X is deprecated, the last V1 update was 1.1.0.
