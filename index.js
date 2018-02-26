@@ -44,8 +44,6 @@ class awsProfileHandler {
         let outputProfileObject = Utils.deepCopy(this.profileObject);
         delete outputProfileObject[profile];
         let encodedProfile = Ini.encodeIniFormat(outputProfileObject);
-        console.log(this.filePath);
-        console.log(encodedProfile);
         Utils.writeFile(this.filePath, encodedProfile);
     }
 
@@ -69,6 +67,9 @@ class awsProfileHandler {
     }
 
     static getProfileCredentials(profile, filePath) {
+        if (!profile || profile.trim().length === 0) {
+            throw new Error('Invalid Input: profile name cannot be omitted nor only contains white spaces.');
+        }
         let credentialPath = filePath || defaultFilePath;
         let profileObject = Ini.decodeIniData(Utils.readFile(credentialPath));
 
@@ -78,23 +79,41 @@ class awsProfileHandler {
     }
 
     static deleteProfile(profile, filePath) {
+        if (!profile || profile.trim().length === 0) {
+            throw new Error('Invalid Input: profile name cannot be omitted nor only contains white spaces.');
+        }
         let credentialPath = filePath || defaultFilePath;
         let profileObject = Ini.decodeIniData(Utils.readFile(credentialPath));
 
+        // profileObject will never be 'null'. worst case is {}
         let outputProfileObject = Utils.deepCopy(profileObject);
         delete outputProfileObject[profile];
         let encodedProfile = Ini.encodeIniFormat(outputProfileObject);
-        Utils.writeFile(filePath, encodedProfile);
+        Utils.writeFile(credentialPath, encodedProfile);
     }
 
     static addProfile(profile, credentials, filePath) {
+        if (!profile || profile.trim().length === 0) {
+            throw new Error('Invalid Input: profile name cannot be omitted nor only contains white spaces.');
+        }
+
+        if (!credentials || Object.keys(credentials).length === 0) {
+            throw new Error('Invalid Input: credentials cannot be omitted nor empty.');
+        }
+
+        if (Object.keys(credentials).length !== 2 ||
+            !credentials.hasOwnProperty('aws_access_key_id') ||
+            !credentials.hasOwnProperty('aws_secret_access_key')) {
+            throw new Error('Invalid input: credentials schema is invalid.');
+        }
+
         let credentialPath = filePath || defaultFilePath;
         let profileObject = Ini.decodeIniData(Utils.readFile(credentialPath));
 
         let outputProfileObject = Utils.deepCopy(profileObject);
         outputProfileObject[profile] = credentials;
         let encodedProfile = Ini.encodeIniFormat(outputProfileObject);
-        Utils.writeFile(filePath, encodedProfile);
+        Utils.writeFile(credentialPath, encodedProfile);
     }
 }
 module.exports = awsProfileHandler;

@@ -81,7 +81,7 @@ awsProfiler.deleteProfile('lameProfileName');
 awsProfiler.deleteProfile('lameProfileName', 'file/path/to/aws/credentials');
 ```
 ## Error
-Two customized errors would be thrown.
+Four customized errors would be thrown.
 1. If format is invalid.
 ```javascript
 // error.message:
@@ -98,5 +98,36 @@ aws_secret_access_key=idIsMissing
 'Invalid AWS credential file. Incomplete key/value pair'
 
 ```
+3. If input credentials object is invalid.
+```javascript
+let missingOneKey = {
+    aws_access_key_id: 1
+}
+
+let haveOneExtraKey = {
+    aws_access_key_id: 1,
+    aws_secret_access_key: 2,
+    extra: 3
+}
+
+let wrongName = {
+    aws_secret_access_key: 2,
+    extra: 3
+}
+
+// error.message
+'Invalid input: credentials schema is invalid.'
+```
+4. If require input parameters are missing.
+```javascript
+awsProfileHandler.addProfile();
+// error.message
+'Invalid Input: profile name cannot be omitted nor only contains white spaces.'
+
+awsProfileHandler.addProfile('profile');
+// error.message
+'Invalid Input: credentials cannot be omitted nor empty.'
+```
+
 ### Note:
 Version 1.X.X is deprecated, the last V1 update was 1.1.0.

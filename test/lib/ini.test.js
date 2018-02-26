@@ -45,10 +45,23 @@ describe('Ini module unit test', () => {
         "value=12345\n" +
         "";
 
+
+    const emptyFile = "";
+
+    const whiteSpaceFile = "\n\t\r   \n";
+
+    const emptyInitObject = {};
+
+
     describe('encodeIniFormat', () => {
         it('happy case', () => {
             let encodedResult = Ini.encodeIniFormat(iniObjectFormat);
             expect(encodedResult).toEqual(iniTextFormat);
+        });
+
+        it('empty object', () => {
+            let encodedResult = Ini.encodeIniFormat(emptyInitObject);
+            expect(encodedResult).toEqual("");
         });
     });
 
@@ -74,6 +87,33 @@ describe('Ini module unit test', () => {
             expect(invalidContent)
                 .toThrowError('Invalid AWS credential file. Cannot have nested sessions');
         });
+
+        it('empty file should return empty object', () => {
+            let decodedResult = Ini.decodeIniData(emptyFile);
+            expect(decodedResult).toEqual({});
+        });
+
+        it('\'white spaces only\' file should return empty object', () => {
+            let decodedResult = Ini.decodeIniData(whiteSpaceFile);
+            expect(decodedResult).toEqual({});
+        });
     });
+
+    describe('_emptyCheck', () => {
+        it('should return true if the input array is empty', () => {
+            let input_array = [];
+            expect(Ini._emptyCheck(input_array)).toEqual(true);
+        });
+
+        it('should return false if the input array has at least one non-whitespace', () => {
+            let input_array = ['\n\n', '\t', '  ', 'done'];
+            expect(Ini._emptyCheck(input_array)).toEqual(false);
+        });
+
+        it('should return true if the input array only has whitespace array', () => {
+            let input_array = ['\n\n', '\t', '  ', ''];
+            expect(Ini._emptyCheck(input_array)).toEqual(true);
+        });
+    })
 });
 
