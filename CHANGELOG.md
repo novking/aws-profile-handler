@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [2.0.0] - 2018-02-16
+## [2.0.2] - 2018-02-27
+### Added
+- Validation for the correct keys during decode the INI file.
+
+## [2.0.1] - 2018-02-26
 ### Added
 - Validator: Input profile name cannot be white space, '\n', '\t', etc...
 - Validator: Input profile cannot be missing.

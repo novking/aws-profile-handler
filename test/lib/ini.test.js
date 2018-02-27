@@ -5,44 +5,44 @@ const Ini = require('../../lib/ini');
 describe('Ini module unit test', () => {
     const iniObjectFormat = {
         'default': {
-            'key': '123',
-            'value': '321'
+            'aws_access_key_id': '123',
+            'aws_secret_access_key': '321'
         },
         'test': {
-            'key': '12345',
-            'value': '12345'
+            'aws_access_key_id': '12345',
+            'aws_secret_access_key': '12345'
         }
     };
 
     const iniTextFormat =
         "[default]\n" +
-        "key=123\n" +
-        "value=321\n" +
+        "aws_access_key_id=123\n" +
+        "aws_secret_access_key=321\n" +
         "\n" +
         "[test]\n" +
-        "key=12345\n" +
-        "value=12345\n" +
+        "aws_access_key_id=12345\n" +
+        "aws_secret_access_key=12345\n" +
         "";
 
     const incompeletedKeyPair =
         "[default]\n" +
-        "key=123\n" +
-        "value=\n" +
+        "aws_access_key_id=123\n" +
+        "aws_secret_access_key=\n" +
         "\n" +
         "[test]\n" +
-        "key=12345\n" +
-        "value=12345\n" +
+        "aws_access_key_id=12345\n" +
+        "aws_secret_access_key=12345\n" +
         "";
 
     const nestedSession =
         "[default]\n" +
         "[nested]\n" +
-        "key=123\n" +
-        "value=\n" +
+        "aws_access_key_id=123\n" +
+        "aws_secret_access_key=\n" +
         "\n" +
         "[test]\n" +
-        "key=12345\n" +
-        "value=12345\n" +
+        "aws_access_key_id=12345\n" +
+        "aws_secret_access_key=12345\n" +
         "";
 
 
