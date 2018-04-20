@@ -18,33 +18,26 @@ describe('Ini module unit test', () => {
         "[default]\n" +
         "aws_access_key_id=123\n" +
         "aws_secret_access_key=321\n" +
-        "\n" +
         "[test]\n" +
         "aws_access_key_id=12345\n" +
-        "aws_secret_access_key=12345\n" +
-        "";
+        "aws_secret_access_key=12345";
 
     const incompeletedKeyPair =
         "[default]\n" +
         "aws_access_key_id=123\n" +
         "aws_secret_access_key=\n" +
-        "\n" +
         "[test]\n" +
         "aws_access_key_id=12345\n" +
-        "aws_secret_access_key=12345\n" +
-        "";
+        "aws_secret_access_key=12345\n";
 
     const nestedSession =
         "[default]\n" +
         "[nested]\n" +
         "aws_access_key_id=123\n" +
         "aws_secret_access_key=\n" +
-        "\n" +
         "[test]\n" +
         "aws_access_key_id=12345\n" +
-        "aws_secret_access_key=12345\n" +
-        "";
-
+        "aws_secret_access_key=12345\n";
 
     const emptyFile = "";
 
