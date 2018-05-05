@@ -6,7 +6,8 @@ describe('Ini module unit test', () => {
     const iniObjectFormat = {
         'default': {
             'aws_access_key_id': '123',
-            'aws_secret_access_key': '321'
+            'aws_secret_access_key': '321',
+            'region': 'us-east-1'
         },
         'test': {
             'aws_access_key_id': '12345',
@@ -18,9 +19,23 @@ describe('Ini module unit test', () => {
         "[default]\n" +
         "aws_access_key_id=123\n" +
         "aws_secret_access_key=321\n" +
+        "region=us-east-1\n" +
         "[test]\n" +
         "aws_access_key_id=12345\n" +
         "aws_secret_access_key=12345";
+
+    const withCommentsIniTextFormat =
+        "# start comments\n" +
+        "[default]\n" +
+        "aws_access_key_id=123 ;inline comments\n" +
+        "aws_secret_access_key=321 # inline comments\n" +
+        "region=us-east-1 \n" +
+        "# ending comments\n" +
+        "\r\t\n" +
+        "[test]\n" +
+        "aws_access_key_id=12345\n" +
+        "aws_secret_access_key=12345";
+
 
     const incompeletedKeyPair =
         "[default]\n" +
@@ -62,6 +77,11 @@ describe('Ini module unit test', () => {
     describe('decodeInitData', () => {
         it('happy case', () => {
             let decodedResult = Ini.decodeIniData(iniTextFormat);
+            expect(decodedResult).toEqual(iniObjectFormat);
+        });
+
+        it('with comments', () => {
+            let decodedResult = Ini.decodeIniData(withCommentsIniTextFormat);
             expect(decodedResult).toEqual(iniObjectFormat);
         });
 
