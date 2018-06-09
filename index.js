@@ -102,8 +102,8 @@ class awsProfileHandler {
         }
 
         if (Object.keys(credentials).length !== 2 ||
-            !credentials.hasOwnProperty('aws_access_key_id') ||
-            !credentials.hasOwnProperty('aws_secret_access_key')) {
+            !this.isValidSchema(credentials) &&
+            !this.isValidAltSchema(credentials)) {
             throw new Error('Invalid input: credentials schema is invalid.');
         }
 
@@ -115,6 +115,14 @@ class awsProfileHandler {
         let encodedProfile = Ini.encodeIniFormat(outputProfileObject);
         Utils.writeFile(credentialPath, encodedProfile);
     }
+
+    static isValidSchema(credentials) {
+        return (credentials.hasOwnProperty('aws_access_key_id') && credentials.hasOwnProperty('aws_secret_access_key'))
+    }
+
+    static isValidAltSchema(credentials) {
+        return (credentials.hasOwnProperty('role_arn') && credentials.hasOwnProperty('source_profile'))
+    }    
 }
 module.exports = awsProfileHandler;
 
