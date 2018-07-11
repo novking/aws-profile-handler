@@ -20,9 +20,11 @@ describe('Ini module unit test', () => {
         "aws_access_key_id=123\n" +
         "aws_secret_access_key=321\n" +
         "region=us-east-1\n" +
+        "\n" +
         "[test]\n" +
         "aws_access_key_id=12345\n" +
-        "aws_secret_access_key=12345";
+        "aws_secret_access_key=12345" +
+        "\n";
 
     const withCommentsIniTextFormat =
         "# start comments\n" +
