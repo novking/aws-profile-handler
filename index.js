@@ -4,7 +4,7 @@ const path = require('path');
 const os = require('os');
 const Ini = require('./lib/ini');
 const Utils = require('./lib/utils');
-const defaultFilePath = path.join(os.homedir(), '.aws', 'credentials');
+const defaultFilePath = process.env.AWS_SHARED_CREDENTIALS_FILE || path.join(os.homedir(), '.aws', 'credentials');
 
 class awsProfileHandler {
     /**
@@ -13,7 +13,7 @@ class awsProfileHandler {
      */
     constructor(filePath) {
         const defaultFilePath = path.join(os.homedir(), '.aws', 'credentials');
-        this.filePath = filePath || process.env.AWS_SHARED_CREDENTIALS_FILE || defaultFilePath;
+        this.filePath = filePath || defaultFilePath;
         this.profileObject = Ini.decodeIniData(Utils.readFile(this.filePath));
     }
 
