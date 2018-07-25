@@ -13,7 +13,7 @@ class awsProfileHandler {
      */
     constructor(filePath) {
         const defaultFilePath = path.join(os.homedir(), '.aws', 'credentials');
-        this.filePath = filePath || defaultFilePath;
+        this.filePath = filePath || process.env.AWS_SHARED_CREDENTIALS_FILE || defaultFilePath;
         this.profileObject = Ini.decodeIniData(Utils.readFile(this.filePath));
     }
 
