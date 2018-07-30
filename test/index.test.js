@@ -30,6 +30,26 @@ let addedObject = {
         "keys": "b"
     }
 };
+let addedObjectAltSchema = {
+    "happyCase": {
+        "role_arn": "a",
+        "source_profile": "b"
+    },
+    "emptyObject": {
+    },
+    "missingOneKey": {
+        "source_profile": "a",
+    },
+    "containsOneExtraKey": {
+        "role_arn": "a",
+        "source_profile": "b",
+        "extra": 123
+    },
+    "wrongKeys": {
+        "wrong": "a",
+        "keys": "b"
+    }
+};
 let childObject = {
     "default": {
         "key1": "val1",
@@ -227,6 +247,79 @@ describe('V2 awsProfileHandler unit test', () => {
                 .toThrowError('Invalid input: credentials schema is invalid.');
         });
     })
+
+    describe('addProfile - alt schema', () => {
+        it ('happy case', () => {
+            let expected_result = {
+                "default": childObject.default,
+                "awesome": {
+                    "aaron": "that's me"
+                },
+                "add": addedObjectAltSchema.happyCase
+            };
+            awsProfileHandler.addProfile("add", addedObjectAltSchema.happyCase);
+            expect(Utils.writeFile).toBeCalled();
+            expect(Ini.encodeIniFormat)
+                .toBeCalledWith(expected_result);
+        });
+
+
+        it('should throw error if input profile is missing', () => {
+            function invalidInput() {
+                return awsProfileHandler.addProfile();
+            }
+            expect(invalidInput)
+                .toThrowError('Invalid Input: profile name cannot be omitted nor only contains white spaces.');
+        });
+
+        it('should throw error if input profile is only white space', () => {
+            function invalidInput() {
+                return awsProfileHandler.addProfile("\n\t  ");
+            }
+            expect(invalidInput)
+                .toThrowError('Invalid Input: profile name cannot be omitted nor only contains white spaces.');
+        });
+
+        it('should throw error if input credentials is missing', () => {
+            function invalidInput() {
+                return awsProfileHandler.addProfile('profile');
+            }
+            expect(invalidInput)
+                .toThrowError('Invalid Input: credentials cannot be omitted nor empty.');
+        });
+
+        it('should throw error if input credentials is empty', () => {
+            function invalidInput() {
+                return awsProfileHandler.addProfile('profile', addedObjectAltSchema.emptyObject);
+            }
+            expect(invalidInput)
+                .toThrowError('Invalid Input: credentials cannot be omitted nor empty.');
+        });
+
+        it('should throw error if input credentials is missing one key', () => {
+            function invalidInput() {
+                return awsProfileHandler.addProfile('profile', addedObjectAltSchema.missingOneKey);
+            }
+            expect(invalidInput)
+                .toThrowError('Invalid input: credentials schema is invalid.');
+        });
+
+        it('should throw error if input credentials has extra keys', () => {
+            function invalidInput() {
+                return awsProfileHandler.addProfile('profile', addedObjectAltSchema.containsOneExtraKey);
+            }
+            expect(invalidInput)
+                .toThrowError('Invalid input: credentials schema is invalid.');
+        });
+
+        it('should throw error if input credentials object has wrong keys', () => {
+            function invalidInput() {
+                return awsProfileHandler.addProfile('profile', addedObjectAltSchema.wrongKeys);
+            }
+            expect(invalidInput)
+                .toThrowError('Invalid input: credentials schema is invalid.');
+        });
+    })    
 });
 
 describe('awsProfileHandler unit test', () => {
